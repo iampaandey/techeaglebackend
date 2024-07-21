@@ -1,16 +1,6 @@
 const mongoose = require('mongoose');
 
-const contentSchema = new mongoose.Schema({
-  type: {
-    type: String,
-    enum: ['text', 'image', 'video'],
-    required: true
-  },
-  data: {
-    type: mongoose.Schema.Types.Mixed,
-    required: true
-  }
-}, { _id: false });
+
 
 const BlogSchema = new mongoose.Schema({
   title: {
@@ -22,8 +12,16 @@ const BlogSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  content: {
-    type: contentSchema,
+  para: {
+    type: String,
+    required: true
+  },
+  image: {
+    type: String,
+    required: true
+  },
+  video: {
+    type: String,
     required: true
   },
   author: {
