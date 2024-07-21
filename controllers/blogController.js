@@ -4,13 +4,12 @@ const User = require("../models/User");
 
 //controller to create a blog
 const createBlog = async (req, res) => {
-    const { title, content, description } = await bodyParser(req);
+    const { title, image, video,  description, location } = await bodyParser(req);
     try {
         const author = req.user.id;
         console.log(author);
-        const blog = new Blog({ title, description, content, author });
+        const blog = new Blog({ title, description,author, image, video, location});
         await blog.save();
-
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(blog));
     } catch (error) {
