@@ -1,0 +1,21 @@
+{
+  "name": "techeaglebackend",
+  "version": "1.0.0",
+  "description": "A Backend Service To handle requests to Tech Eagle Blogs Requests",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Raghav Pandey",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
+    "gridfs-stream": "^1.1.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.5.1",
+    "multer": "^1.4.4",
+    "multer-gridfs-storage": "^5.0.2"
+  }
+}
