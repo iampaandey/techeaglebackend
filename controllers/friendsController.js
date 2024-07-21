@@ -73,4 +73,21 @@ const myfriends= async(req,res)=>{
       }
 }
 
-module.exports = { allUsers, addFriend, myfriends };
+const userInfo=async(req,res)=>{
+    try {
+        const userId = req.user.id;
+        const user = await User.findById({_id:userId});
+        if(!user){
+        res.writeHead(404, { 'Content-Type': 'application/json' });
+          return res.end(JSON.stringify({ message: 'User Not Found' }));
+        }
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(user));
+      } catch (error) {
+        console.error(error.message);
+        res.writeHead(500, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ message: 'Server error' }));
+      }
+}
+
+module.exports = { allUsers, addFriend, myfriends, userInfo };

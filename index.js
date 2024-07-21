@@ -4,7 +4,7 @@ const { login, register } = require('./controllers/authController');
 const dotenv = require("dotenv");
 const { authenticate } = require('./middleware/auth');
 const { createBlog, getBlogs, like, unlike, comment, getBlogWithComments } = require('./controllers/blogController');
-const { addFriend, allUsers, myfriends } = require('./controllers/friendsController');
+const { addFriend, allUsers, myfriends, userInfo } = require('./controllers/friendsController');
 const { Grid } = require('gridfs-stream');
 const { GridFsStorage } = require('multer-gridfs-storage');
 const multer = require('multer');
@@ -32,15 +32,17 @@ const server = http.createServer((req, res) => {
         case '/':
             res.end("Hello!");
             break;
-
         case '/login':
             login(req, res);
             break;
-
+        case '/user':
+            authenticate(req,res,()=>{
+               userInfo(req,res);
+            })
+            break;
         case '/register':
             register(req, res);
             break;
-
         case '/blog':
             if (req.method === "GET") {
                 getBlogs(req, res);
@@ -72,13 +74,11 @@ const server = http.createServer((req, res) => {
                 like(req, res);
             })
             break;
-
         case '/unlike':
             authenticate(req, res, () => {
                 unlike(req, res);
             })
             break;
-
         case '/comment':
             authenticate(req, res, () => {
                 comment(req, res);
