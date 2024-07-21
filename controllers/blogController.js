@@ -51,7 +51,7 @@ const like = async (req, res) => {
 
         //check if user is liking his own blog
 
-        if (userId === blogAuthor) {
+        if (userId === blogAuthor.toString()) {
             //increasing like
             blog.likes.push(userId);
             await blog.save();
@@ -72,7 +72,7 @@ const like = async (req, res) => {
         res.end(JSON.stringify({ message: 'Added Your Like' }));
 
     } catch (error) {
-        console.error(err.message);
+        console.error(error.message);
         res.writeHead(500, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ message: 'Server error' }));
     }
@@ -97,7 +97,7 @@ const comment = async (req, res) => {
          author:userId,
          text:comment
         }
-        if(blogAuthor===userId){
+        if(blogAuthor.toString()===userId){
         //adding comment    
          blog.comments.push(commentObj);
          res.writeHead(200, { 'Content-Type': 'application/json' });
