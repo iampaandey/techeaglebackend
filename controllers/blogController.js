@@ -82,7 +82,6 @@ const like = async (req, res) => {
 const comment = async (req, res) => {
     const { blogId,comment } = await bodyParser(req);
     try {
-
         const userId = req.user.id;
         //finding user
         const user = await User.findById({ _id: userId });
@@ -91,7 +90,6 @@ const comment = async (req, res) => {
         //retrieving author id
         const blogAuthor = blog.author;
         console.log("blogAuthor", blogAuthor);
-
         //creating comment Object
         const commentObj={
          author:userId,
@@ -102,6 +100,7 @@ const comment = async (req, res) => {
          blog.comments.push(commentObj);
          res.writeHead(200, { 'Content-Type': 'application/json' });
          res.end(JSON.stringify({ message: 'Comment Added Successfully.' }));
+         return;
         }
 
 
@@ -109,13 +108,15 @@ const comment = async (req, res) => {
         if (!user.friends.includes(blogAuthor)) {
             res.writeHead(402, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ message: 'Add user as friend to comment on their post' }));
+            return;
         }
 
         //adding comment
-        blog.comments.push(commentObj);
-        await blog.save();
+         blog.comments.push(commentObj);
+         await blog.save();
          res.writeHead(200, { 'Content-Type': 'application/json' });
          res.end(JSON.stringify({ message: 'Comment Added Successfully.' }));
+         return;
 
     } catch (error) {
         console.error(error.message);
@@ -123,6 +124,8 @@ const comment = async (req, res) => {
         res.end(JSON.stringify({ message: 'Server error' }));
     }
 }
+
+    
 
 //controller to unlike a blog
 const unlike = async (req, res) => {
